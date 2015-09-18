@@ -1,0 +1,16 @@
+%p#notice= notice
+%p
+  %strong Application:
+  = @task.application_id
+%p
+  %strong Status:
+  = @task.status
+%p
+  %strong Progress:
+  = @task.progress
+%p
+  %strong Duration:
+  = @task.duration
+= link_to 'Edit', edit_task_path(@task)
+|
+= link_to 'Back', tasks_path

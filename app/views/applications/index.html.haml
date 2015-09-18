@@ -1,0 +1,16 @@
+%h3 Applications
+%table.table
+  %thead
+    %tr
+      %th Name
+      %th Actions
+  %tbody
+    - @applications.each do |application|
+      %tr
+        %td= application.name
+        %td
+          = link_to 'Show', application, class: 'btn btn-primary'
+          = link_to 'Edit', edit_application_path(application), class: 'btn btn-info'
+          = link_to 'Destroy', application, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+%br/
+= link_to 'New Application', new_application_path, class: 'btn btn-success'

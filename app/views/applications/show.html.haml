@@ -1,0 +1,7 @@
+%p#notice= notice
+%p
+  %strong Name:
+  = @application.name
+= link_to 'Edit', edit_application_path(@application)
+|
+= link_to 'Back', applications_path
