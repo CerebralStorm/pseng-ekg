@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20150918003627) do
 
   create_table "tasks", force: true do |t|
     t.integer  "application_id"
+    t.string   "name"
     t.string   "status"
     t.integer  "progress"
     t.integer  "duration"
