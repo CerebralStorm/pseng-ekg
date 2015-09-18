@@ -43,12 +43,12 @@ var ApplicationLayout = React.createClass({
 
     return (
       <div className="row">
-        <div className="col-md-2">
+        <div className="col-md-3">
           <ul className="nav nav-pills nav-stacked">
             {applicationNodes}
           </ul>
         </div>
-        <div className="col-md-10">
+        <div className="col-md-9">
           <h3>{this.state.application.name ? this.state.application.name : '<- Please select an application.'}</h3>
           {taskNodes}
         </div>
