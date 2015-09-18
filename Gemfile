@@ -15,6 +15,7 @@ gem 'bootstrap-sass', '~> 3.3.5'
 gem 'bootswatch-rails'
 gem 'pseng_ekg_client', '~> 0.1.6'
 gem 'rubycas-client', :git => 'git://github.com/rubycas/rubycas-client.git'
+gem 'rails_12factor', group: :production
 
 group :development, :test do
   gem 'pry'
