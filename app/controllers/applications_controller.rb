@@ -24,7 +24,6 @@ class ApplicationsController < ApplicationController
   # POST /applications
   # POST /applications.json
   def create
-    binding.pry
     @application = Application.new(application_params)
 
     respond_to do |format|

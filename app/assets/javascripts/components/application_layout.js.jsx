@@ -29,9 +29,7 @@ var ApplicationLayout = React.createClass({
       }
 
       return (
-        <li className={liClass} key={application.id}>
-          <Application onApplicationClick={_this.loadTasks} name={application.name} id={application.id} />
-        </li>
+        <Application onApplicationClick={_this.loadTasks} name={application.name} id={application.id} key={application.id} liClass={liClass}/>
       )
     });
 

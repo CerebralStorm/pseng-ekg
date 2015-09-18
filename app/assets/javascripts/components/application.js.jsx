@@ -8,9 +8,9 @@ var Application = React.createClass({
   },
   render: function() {
     return (
-      <div onClick={this.handleClick}>
+      <li className={this.props.liClass} onClick={this.handleClick}>
         {this.props.name}
-      </div>
+      </li>
     );
   }
 });
