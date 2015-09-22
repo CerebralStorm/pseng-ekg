@@ -16,17 +16,16 @@ class Api::V1::TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-      if @task.save
-        render json: @task, status: :created
-      else
-        render json: @task.errors, status: :unprocessable_entity
-      end
+    if @task.save
+      render json: @task, status: :created
+    else
+      render json: @task.errors, status: :unprocessable_entity
     end
   end
 
   def update
     if @task.update(task_params)
-      render json: @task status: :ok
+      render json: @task, status: :ok
     else
       render json: @task.errors, status: :unprocessable_entity
     end
