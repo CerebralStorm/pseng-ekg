@@ -1,10 +1,15 @@
 Rails.application.routes.draw do
+  resources :errors
+
   root 'dashboard#show'
 
   namespace :api do
     namespace :v1 do
       resources :applications do
         resources :tasks
+      end
+      resources :tasks do
+        resources :errors
       end
     end
   end

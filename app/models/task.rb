@@ -1,7 +1,11 @@
 class Task < ActiveRecord::Base
   belongs_to :application
 
+  STATUSES = %w(Running Completed Failed)
   validates :application, presence: true
+  validates :status, inclusion: { in: STATUSES }
+
+  has_many :task_errors, class_name: 'Error', dependent: :destroy
 
   def self.weekly
     begin_date = 7.days.ago.beginning_of_day
