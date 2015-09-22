@@ -16,7 +16,8 @@ gem 'bootswatch-rails'
 gem 'pseng_ekg_client', '~> 0.1.6'
 gem 'rubycas-client', :git => 'git://github.com/rubycas/rubycas-client.git'
 gem 'rails_12factor', group: :production
-
+gem 'react-router-rails', '~>0.13.3.1'
+gem 'thin'
 group :development, :test do
   gem 'pry'
   gem 'factory_girl_rails'

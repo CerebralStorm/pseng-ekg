@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 20150918003627) do
     t.string   "status"
     t.integer  "progress"
     t.integer  "duration"
+    t.datetime "completed_at"
+    t.datetime "failed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
   root 'dashboard#show'
 
-  resources :tasks
-
-  resources :applications
+  namespace :api do
+    namespace :v1 do
+      resources :applications do
+        resources :tasks
+      end
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

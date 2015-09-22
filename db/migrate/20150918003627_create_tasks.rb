@@ -6,6 +6,8 @@ class CreateTasks < ActiveRecord::Migration
       t.string :status
       t.integer :progress
       t.integer :duration
+      t.datetime :completed_at
+      t.datetime :failed_at
 
       t.timestamps
     end

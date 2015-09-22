@@ -1,8 +1,4 @@
 var Task = React.createClass({
-  propTypes: {
-    status: React.PropTypes.string,
-    progress: React.PropTypes.number
-  },
   progressBarClass: function (status) {
     if(status == 'Completed') {
       return 'progress-bar progress-bar-success';
@@ -18,6 +14,7 @@ var Task = React.createClass({
     }
     return (
       <div>
+        <div>{this.props.name}</div>
         <div>Status: {this.props.status}</div>
         <div>Progress: {this.props.progress}</div>
         <div className="progress">
