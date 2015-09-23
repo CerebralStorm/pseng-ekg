@@ -3,23 +3,24 @@ class Task < ActiveRecord::Base
 
   STATUSES = %w(Running Completed Failed)
   validates :application, presence: true
+  validates :name, presence: true
   validates :status, inclusion: { in: STATUSES }
 
   has_many :task_errors, class_name: 'Error', dependent: :destroy
 
-  def self.weekly
-    begin_date = 7.days.ago.beginning_of_day
-    end_date = Date.today.end_of_day
-    where(created_at: begin_date..end_date)
-  end
-
-  def self.daily
+  def self.today
     begin_date = Date.today.beginning_of_day
     end_date = Date.today.end_of_day
     where(created_at: begin_date..end_date)
   end
 
-  def self.monthly
+  def self.this_week
+    begin_date = 7.days.ago.beginning_of_day
+    end_date = Date.today.end_of_day
+    where(created_at: begin_date..end_date)
+  end
+
+  def self.this_month
     begin_date = 1.month.ago.beginning_of_day
     end_date = Date.today.end_of_day
     where(created_at: begin_date..end_date)

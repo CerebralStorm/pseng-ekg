@@ -3,7 +3,7 @@ class Api::V1::ErrorsController < ApplicationController
 
   def index
     if params[:task_id].present?
-      @errors = Task.find(params[:task_id]).errors
+      @errors = Task.find(params[:task_id]).task_errors
     else
       @errors = Error.all
     end

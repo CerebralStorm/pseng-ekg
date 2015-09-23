@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :tasks do
         resources :errors
       end
+      resources :errors
     end
   end
 

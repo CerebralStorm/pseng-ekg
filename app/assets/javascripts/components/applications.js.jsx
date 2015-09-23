@@ -1,7 +1,7 @@
 var Applications = React.createClass({
   getInitialState: function() {
     return {
-      view: 'daily',
+      view: 'today',
       applications: []
     };
   },
@@ -37,11 +37,11 @@ var Applications = React.createClass({
     return (
       <div>
         <div className="btn-group" role="group" aria-label="...">
-          <button type="button" onClick={this.handleFilterButtonClick.bind(this, 'daily')} className={this.filterButtonClass('daily', 'btn-primary')}>Today</button>
-          <button type="button" onClick={this.handleFilterButtonClick.bind(this, 'weekly')} className={this.filterButtonClass('weekly', 'btn-warning')}>This Week</button>
-          <button type="button" onClick={this.handleFilterButtonClick.bind(this, 'monthly')} className={this.filterButtonClass('monthly', 'btn-danger')}>This Month</button>
+          <button type="button" onClick={this.handleFilterButtonClick.bind(this, 'today')} className={this.filterButtonClass('daily', 'btn-primary')}>Today</button>
+          <button type="button" onClick={this.handleFilterButtonClick.bind(this, 'this_week')} className={this.filterButtonClass('weekly', 'btn-warning')}>This Week</button>
+          <button type="button" onClick={this.handleFilterButtonClick.bind(this, 'this_month')} className={this.filterButtonClass('monthly', 'btn-danger')}>This Month</button>
         </div>
-        <p className='lead'>Filtering by {this.state.view}</p>
+        <p className='lead text-center'>Filtering by {this.state.view.titleize()}</p>
         <hr />
         {applicationNodes}
       </div>

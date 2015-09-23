@@ -27,12 +27,12 @@ class JsonBuilder::Application
   end
 
   def scope
-    if params[:view] == 'daily'
-      :daily
-    elsif params[:view] == 'weekly'
-      :weekly
-    elsif params[:view] == 'monthly'
-      :monthly
+    if params[:view] == 'today'
+      :today
+    elsif params[:view] == 'this_week'
+      :this_week
+    elsif params[:view] == 'this_month'
+      :this_month
     end
   end
 end
