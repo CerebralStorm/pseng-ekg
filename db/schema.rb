@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20150923000657) do
     t.integer  "duration"
     t.datetime "completed_at"
     t.datetime "failed_at"
+    t.text     "log"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "errors_count"
