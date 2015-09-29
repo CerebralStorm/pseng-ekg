@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.0'
+gem 'rails', '4.2.0'
+gem 'actioncable', github: "rails/actioncable"
 gem 'pg'
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
@@ -10,10 +11,9 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 gem "haml-rails", "~> 0.9"
-gem 'react-rails', '~> 1.3.0'
+gem 'react-rails', '~> 1.3.1'
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'bootswatch-rails'
-gem 'pseng_ekg_client', '~> 0.1.6'
 gem 'rubycas-client', :git => 'git://github.com/rubycas/rubycas-client.git'
 gem 'rails_12factor', group: :production
 gem 'react-router-rails', '~>0.13.3.1'

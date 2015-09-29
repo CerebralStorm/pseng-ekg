@@ -41,6 +41,13 @@ var TaskDetail = React.createClass({
       return '';
     }
   },
+  logArray: function() {
+    if(this.state.task.log){
+      return this.state.task.log.split("\n")
+    } else {
+      return []
+    }
+  },
   render: function() {
     var errorNodes = this.state.errors.map(function (error, index) {
       return (
@@ -49,6 +56,19 @@ var TaskDetail = React.createClass({
         </ReactRouter.Link>
       )
     }.bind(this));
+    var logNodes = this.state.task.log.split("\n").map(function (error, index) {
+      return (
+        <ReactRouter.Link key={error.id} className="list-group-item" to={'/errors/' + error.id}>
+          {error.message}
+        </ReactRouter.Link>
+      )
+    }.bind(this));
+
+    var logNodes = this.logArray().map(function (item) {
+      return (
+        <li>{item}</li>
+      )
+    });
     return (
       <div>
         <BackButton url={'/'} />
@@ -58,6 +78,9 @@ var TaskDetail = React.createClass({
         <div className='text-warning'>Errors: {this.state.task.errors_count}</div>
         <div className='text-info'>Duration: {this.formatDuration()}</div>
         <hr />
+        <ul>
+          {logNodes}
+        </ul>
         <div className='list-group'>
           {errorNodes}
         </div>
