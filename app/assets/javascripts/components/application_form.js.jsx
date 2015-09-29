@@ -14,17 +14,17 @@ var ApplicationForm = React.createClass({
     $.ajax(url, {
       dataType: 'json',
       type: method,
-      data: { application: { name: this.state.name } },
+      data: { application: { name: this.state.name, url: this.state.url } },
       success: function(data) {
         this.transitionTo('/');
       }.bind(this)
     });
   },
   handleChange: function(evt) {
-    console.log(evt);
-    this.setState({
-      name: evt.target.value
-    });
+    var result = {};
+    var field = evt.target.id.replace('application_', '');
+    result[field] = evt.target.value
+    this.setState(result);
   },
   render: function() {
       return (
@@ -34,7 +34,10 @@ var ApplicationForm = React.createClass({
               <div className="form-group">
                 <label className="control-label">Title</label>
                 <input className="form-control" name="application[name]" id="application_name"  onChange={this.handleChange} value={this.state.name} />
-                <input className="form-control" name="application[url]" id="application_url"  onChange={this.handleChange} value={this.state.name} />
+              </div>
+              <div className='form-group'>
+                <label className="control-label">Application URL</label>
+                <input className="form-control" name="application[url]" id="application_url"  onChange={this.handleChange} value={this.state.url} />
               </div>
               <input type="submit" className="btn btn-primary"/>
             </form>

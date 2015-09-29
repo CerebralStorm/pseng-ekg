@@ -23,6 +23,7 @@ var Task = React.createClass({
           </div>
           <div className='col-md-3 vcenter'>
             <div><span className="text-nowrap">{this.props.task.name}</span></div>
+            <div>Created: {moment(this.props.task.created_at).fromNow()}</div>
             <div>Status: {this.props.task.status}</div>
             <div className='text-warning'>Errors: {this.props.task.errors_count}</div>
           </div>
