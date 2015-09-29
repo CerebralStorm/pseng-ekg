@@ -6,4 +6,4 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Application.where(name: 'eSchool Dashboard 2.0').first_or_create
+Application.where(name: 'eSchool Dashboard 2.0', url: 'http://localhost:3001').first_or_create

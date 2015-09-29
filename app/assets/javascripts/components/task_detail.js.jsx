@@ -2,7 +2,8 @@ var TaskDetail = React.createClass({
   getInitialState: function() {
     return {
       task: {},
-      errors: []
+      errors: [],
+      logs: []
     };
   },
   componentDidMount: function() {
@@ -11,6 +12,7 @@ var TaskDetail = React.createClass({
   getTask: function() {
     $.getJSON("/api/v1/tasks/" + this.props.params.taskId, function(data) {
       this.setState({task: data});
+      this.getTaskLogs();
       this.getTaskErrors();
     }.bind(this));
   },
@@ -20,6 +22,14 @@ var TaskDetail = React.createClass({
         return obj;
       });
       this.setState({ errors: errors });
+    }.bind(this));
+  },
+  getTaskLogs: function () {
+    $.getJSON("/api/v1/tasks/" + this.props.params.taskId + '/logs', function(data) {
+      logs = $.map(data, function(obj) {
+        return obj;
+      });
+      this.setState({ logs: logs });
     }.bind(this));
   },
   progressBarClass: function (status) {
@@ -41,46 +51,34 @@ var TaskDetail = React.createClass({
       return '';
     }
   },
-  logArray: function() {
-    if(this.state.task.log){
-      return this.state.task.log.split("\n")
-    } else {
-      return []
-    }
-  },
   render: function() {
     var errorNodes = this.state.errors.map(function (error, index) {
       return (
         <ReactRouter.Link key={error.id} className="list-group-item" to={'/errors/' + error.id}>
-          {error.message}
+          <label className='label label-warning'>{moment(error.created_at).fromNow()}</label> {error.message}
         </ReactRouter.Link>
       )
     }.bind(this));
-    var logNodes = this.state.task.log.split("\n").map(function (error, index) {
+    var logNodes = this.state.logs.map(function (item) {
       return (
-        <ReactRouter.Link key={error.id} className="list-group-item" to={'/errors/' + error.id}>
-          {error.message}
-        </ReactRouter.Link>
-      )
-    }.bind(this));
-
-    var logNodes = this.logArray().map(function (item) {
-      return (
-        <li>{item}</li>
+        <li key={item.id}><label className='label label-default'>{moment(item.created_at).fromNow()}</label> {item.value}</li>
       )
     });
     return (
       <div>
         <BackButton url={'/'} />
         <hr />
-        <div>{this.state.task.name}</div>
+        <h4>{this.state.task.name}</h4>
         <div>Status: {this.state.task.status}</div>
         <div className='text-warning'>Errors: {this.state.task.errors_count}</div>
         <div className='text-info'>Duration: {this.formatDuration()}</div>
         <hr />
+        <h5>Logs</h5>
         <ul>
           {logNodes}
         </ul>
+        <hr />
+        <h5>Errors</h5>
         <div className='list-group'>
           {errorNodes}
         </div>

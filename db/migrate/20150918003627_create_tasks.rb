@@ -9,6 +9,7 @@ class CreateTasks < ActiveRecord::Migration
       t.datetime :completed_at
       t.datetime :failed_at
       t.text :log
+      t.integer :errors_count
 
       t.timestamps
     end

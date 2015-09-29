@@ -7,6 +7,7 @@ class Task < ActiveRecord::Base
   validates :status, inclusion: { in: STATUSES }
 
   has_many :task_errors, class_name: 'Error', dependent: :destroy
+  has_many :task_logs, class_name: 'Log', dependent: :destroy
 
   def self.today
     begin_date = Date.today.beginning_of_day

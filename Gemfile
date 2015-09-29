@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.0'
-gem 'actioncable', github: "rails/actioncable"
 gem 'pg'
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
@@ -18,6 +17,8 @@ gem 'rubycas-client', :git => 'git://github.com/rubycas/rubycas-client.git'
 gem 'rails_12factor', group: :production
 gem 'react-router-rails', '~>0.13.3.1'
 gem 'thin'
+gem 'httparty'
+gem 'momentjs-rails'
 group :development, :test do
   gem 'pry'
   gem 'factory_girl_rails'

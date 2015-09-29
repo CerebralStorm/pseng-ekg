@@ -12,13 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require moment
 //= require react
 //= require react_ujs
 //= require react_router
 //= require react_router_ujs
 //= require components
 //= require_tree .
-
 
 String.prototype.replaceAll = function(str1, str2, ignore) {
   return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);

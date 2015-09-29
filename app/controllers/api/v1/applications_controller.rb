@@ -45,6 +45,6 @@ class Api::V1::ApplicationsController < ApplicationController
     end
 
     def application_params
-      params.require(:application).permit(:name)
+      params.require(:application).permit(:name, :url)
     end
 end

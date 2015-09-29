@@ -10,8 +10,10 @@ Rails.application.routes.draw do
       end
       resources :tasks do
         resources :errors
+        resources :logs
       end
       resources :errors
+      resources :logs
     end
   end
 

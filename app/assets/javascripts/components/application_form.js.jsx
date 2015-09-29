@@ -1,7 +1,10 @@
 var ApplicationForm = React.createClass({
   mixins: [ ReactRouter.Navigation ],
   getInitialState: function() {
-    return { name: ''};
+    return {
+      name: '',
+      url: ''
+    };
   },
   handleSubmit: function (e) {
     e.preventDefault();
@@ -18,6 +21,7 @@ var ApplicationForm = React.createClass({
     });
   },
   handleChange: function(evt) {
+    console.log(evt);
     this.setState({
       name: evt.target.value
     });
@@ -30,6 +34,7 @@ var ApplicationForm = React.createClass({
               <div className="form-group">
                 <label className="control-label">Title</label>
                 <input className="form-control" name="application[name]" id="application_name"  onChange={this.handleChange} value={this.state.name} />
+                <input className="form-control" name="application[url]" id="application_url"  onChange={this.handleChange} value={this.state.name} />
               </div>
               <input type="submit" className="btn btn-primary"/>
             </form>
