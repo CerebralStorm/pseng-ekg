@@ -8,6 +8,10 @@ var TaskDetail = React.createClass({
   },
   componentDidMount: function() {
     this.getTask();
+    var channel = Window.pusher.subscribe('task');
+    channel.bind('update', function(data) {
+      this.setState({task: data});
+    }.bind(this));
   },
   getTask: function() {
     $.getJSON("/api/v1/tasks/" + this.props.params.taskId, function(data) {

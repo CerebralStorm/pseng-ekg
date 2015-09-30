@@ -1,3 +1,5 @@
+require 'pusher'
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -35,4 +37,8 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
   config.react.variant = :development
+
+  Pusher.app_id = '145086'
+  Pusher.key = '7ccf8b734ae6c62900a7'
+  Pusher.secret = 'ae9fe4936af80c572f9a'
 end

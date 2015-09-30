@@ -9,6 +9,12 @@ class Task < ActiveRecord::Base
   has_many :task_errors, class_name: 'Error', dependent: :destroy
   has_many :task_logs, class_name: 'Log', dependent: :destroy
 
+  after_update :send_pusher_update_message
+
+  def send_pusher_update_message
+    Pusher.trigger('task', 'update', self.attributes)
+  end
+
   def self.today
     begin_date = Date.today.beginning_of_day
     end_date = Date.today.end_of_day

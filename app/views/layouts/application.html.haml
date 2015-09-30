@@ -6,6 +6,12 @@
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
     = csrf_meta_tags
+
+    %script{:src => "https://js.pusher.com/3.0/pusher.min.js"}
+    :javascript
+        Window.pusher = new Pusher('7ccf8b734ae6c62900a7', {
+        encrypted: true
+      });
   %body
     #container
       = yield

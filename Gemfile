@@ -19,6 +19,7 @@ gem 'react-router-rails', '~>0.13.3.1'
 gem 'thin'
 gem 'httparty'
 gem 'momentjs-rails'
+gem 'pusher'
 group :development, :test do
   gem 'pry'
   gem 'factory_girl_rails'
