@@ -1,4 +1,5 @@
 var TaskDetail = React.createClass({
+  mixins: [SortByCreatedAtMixin],
   getInitialState: function() {
     return {
       task: {},
@@ -8,12 +9,39 @@ var TaskDetail = React.createClass({
   },
   componentDidMount: function() {
     this.getTask();
-    var channel = Window.pusher.subscribe('task_channel');
-    channel.bind('update', function(data) {
-      if(this.state.task.id == data.id){
-        this.setState({task: data});
-      }
-    }.bind(this));
+    if (Window.pusher.channel('task_channel') === undefined) {
+      var channel = Window.pusher.subscribe('task_channel');
+
+      channel.bind('update', function(data) {
+        if(this.state.task.id == data.id){
+          this.setState({task: data});
+        }
+      }.bind(this));
+    }
+
+    if (Window.pusher.channel('log_channel') === undefined) {
+      var channel = Window.pusher.subscribe('log_channel');
+      channel.bind('create', function(data) {
+        if(this.state.task.id == data.task_id){
+          var logs = this.state.logs;
+          logs.push(data);
+          this.sortByCreatedAt(logs);
+          this.setState({logs: logs});
+        }
+      }.bind(this));
+    }
+
+    if (Window.pusher.channel('log_channel') === undefined) {
+      var channel = Window.pusher.subscribe('error_channel');
+      channel.bind('create', function(data) {
+        if(this.state.task.id == data.task_id){
+          var errors = this.state.errors;
+          errors.push(data);
+          this.sortByCreatedAt(errors);
+          this.setState({errors: errors});
+        }
+      }.bind(this));
+    }
   },
   getTask: function() {
     $.getJSON("/api/v1/tasks/" + this.props.params.taskId, function(data) {
@@ -27,6 +55,7 @@ var TaskDetail = React.createClass({
       errors = $.map(data, function(obj) {
         return obj;
       });
+      this.sortByCreatedAt(errors);
       this.setState({ errors: errors });
     }.bind(this));
   },
@@ -35,6 +64,7 @@ var TaskDetail = React.createClass({
       logs = $.map(data, function(obj) {
         return obj;
       });
+      this.sortByCreatedAt(logs);
       this.setState({ logs: logs });
     }.bind(this));
   },
@@ -71,7 +101,7 @@ var TaskDetail = React.createClass({
       )
     });
     return (
-      <div>
+      <div className='well well-lg'>
         <BackButton url={'/'} />
         <hr />
         <h4>{this.state.task.name}</h4>

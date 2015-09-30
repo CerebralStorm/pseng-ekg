@@ -1,4 +1,6 @@
 class Task < ActiveRecord::Base
+  include PusherCallbacks
+
   belongs_to :application
 
   STATUSES = %w(Running Completed Failed)
@@ -8,24 +10,6 @@ class Task < ActiveRecord::Base
 
   has_many :task_errors, class_name: 'Error', dependent: :destroy
   has_many :task_logs, class_name: 'Log', dependent: :destroy
-
-  after_update :send_pusher_update_message
-
-  def send_pusher_update_message
-    Pusher.trigger('task_channel', 'update', self.attributes)
-  end
-
-  after_create :send_pusher_create_message
-
-  def send_pusher_create_message
-    Pusher.trigger('task_channel', 'create', self.attributes)
-  end
-
-  before_destroy :send_pusher_delete_message
-
-  def send_pusher_delete_message
-    Pusher.trigger('task_channel', 'delete', self.attributes)
-  end
 
   def self.today
     begin_date = Date.today.beginning_of_day
