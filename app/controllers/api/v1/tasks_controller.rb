@@ -7,6 +7,7 @@ class Api::V1::TasksController < ApplicationController
     else
       @tasks = Task.all
     end
+    @tasks = @tasks.send(params[:view].to_sym) if params[:view]
     render json: @tasks
   end
 

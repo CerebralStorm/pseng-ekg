@@ -3,11 +3,11 @@ class Api::V1::ApplicationsController < ApplicationController
 
   def index
     @applications = Application.all
-    render json: JsonBuilder::Application.new(@applications, params).json_hash
+    render json: @applications
   end
 
   def show
-    render json: JsonBuilder::Application.new(@application, params).json_hash
+    render json: @application
   end
 
   def create

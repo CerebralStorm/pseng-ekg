@@ -8,9 +8,11 @@ var TaskDetail = React.createClass({
   },
   componentDidMount: function() {
     this.getTask();
-    var channel = Window.pusher.subscribe('task');
+    var channel = Window.pusher.subscribe('task_channel');
     channel.bind('update', function(data) {
-      this.setState({task: data});
+      if(this.state.task.id == data.id){
+        this.setState({task: data});
+      }
     }.bind(this));
   },
   getTask: function() {

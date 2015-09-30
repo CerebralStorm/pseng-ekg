@@ -12,7 +12,19 @@ class Task < ActiveRecord::Base
   after_update :send_pusher_update_message
 
   def send_pusher_update_message
-    Pusher.trigger('task', 'update', self.attributes)
+    Pusher.trigger('task_channel', 'update', self.attributes)
+  end
+
+  after_create :send_pusher_create_message
+
+  def send_pusher_create_message
+    Pusher.trigger('task_channel', 'create', self.attributes)
+  end
+
+  before_destroy :send_pusher_delete_message
+
+  def send_pusher_delete_message
+    Pusher.trigger('task_channel', 'delete', self.attributes)
   end
 
   def self.today
