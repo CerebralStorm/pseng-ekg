@@ -9,39 +9,32 @@ var TaskDetail = React.createClass({
   },
   componentDidMount: function() {
     this.getTask();
-    if (Window.pusher.channel('task_channel') === undefined) {
-      var channel = Window.pusher.subscribe('task_channel');
+    var channel = Window.pusher.subscribe('task_channel');
+    channel.bind('update', function(data) {
+      if(this.state.task.id == data.id){
+        this.setState({task: data});
+      }
+    }.bind(this));
 
-      channel.bind('update', function(data) {
-        if(this.state.task.id == data.id){
-          this.setState({task: data});
-        }
-      }.bind(this));
-    }
+    var channel = Window.pusher.subscribe('log_channel');
+    channel.bind('create', function(data) {
+      if(this.state.task.id == data.task_id){
+        var logs = this.state.logs;
+        logs.push(data);
+        this.sortByCreatedAt(logs);
+        this.setState({logs: logs});
+      }
+    }.bind(this));
 
-    if (Window.pusher.channel('log_channel') === undefined) {
-      var channel = Window.pusher.subscribe('log_channel');
-      channel.bind('create', function(data) {
-        if(this.state.task.id == data.task_id){
-          var logs = this.state.logs;
-          logs.push(data);
-          this.sortByCreatedAt(logs);
-          this.setState({logs: logs});
-        }
-      }.bind(this));
-    }
-
-    if (Window.pusher.channel('log_channel') === undefined) {
-      var channel = Window.pusher.subscribe('error_channel');
-      channel.bind('create', function(data) {
-        if(this.state.task.id == data.task_id){
-          var errors = this.state.errors;
-          errors.push(data);
-          this.sortByCreatedAt(errors);
-          this.setState({errors: errors});
-        }
-      }.bind(this));
-    }
+    var channel = Window.pusher.subscribe('error_channel');
+    channel.bind('create', function(data) {
+      if(this.state.task.id == data.task_id){
+        var errors = this.state.errors;
+        errors.push(data);
+        this.sortByCreatedAt(errors);
+        this.setState({errors: errors});
+      }
+    }.bind(this));
   },
   getTask: function() {
     $.getJSON("/api/v1/tasks/" + this.props.params.taskId, function(data) {
@@ -97,26 +90,36 @@ var TaskDetail = React.createClass({
     }.bind(this));
     var logNodes = this.state.logs.map(function (item) {
       return (
-        <li key={item.id}><label className='label label-default'>{moment(item.created_at).fromNow()}</label> {item.value}</li>
+        <li key={item.id}><label className='label label-default'><TimeAgo createdAt={item.created_at} /></label> {item.value}</li>
       )
     });
     return (
-      <div className='well well-lg'>
+      <div>
         <BackButton url={'/'} />
-        <hr />
-        <h4>{this.state.task.name}</h4>
-        <div>Status: {this.state.task.status}</div>
-        <div className='text-warning'>Errors: {this.state.task.errors_count}</div>
-        <div className='text-info'>Duration: {this.formatDuration()}</div>
-        <hr />
-        <h5>Logs</h5>
-        <ul>
-          {logNodes}
-        </ul>
-        <hr />
-        <h5>Errors</h5>
-        <div className='list-group'>
-          {errorNodes}
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <h3 className="panel-title">{this.state.task.name}</h3>
+          </div>
+          <div className="panel-body">
+            <div className='well well-lg'>
+              <div>Status: {this.state.task.status}</div>
+              <div className='text-warning'>Errors: {this.state.task.errors_count}</div>
+              <div className='text-info'>Duration: {this.formatDuration()}</div>
+
+
+              <h5 className='text-center'>Logs</h5>
+              <ul>
+                {logNodes}
+              </ul>
+
+              <hr />
+
+              <h5 className='text-center text-warning'>Errors</h5>
+              <div className='list-group'>
+                {errorNodes}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );

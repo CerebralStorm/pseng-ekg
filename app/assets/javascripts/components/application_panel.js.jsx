@@ -6,37 +6,34 @@ var ApplicationPanel = React.createClass({
   },
   componentDidMount: function() {
     this.getTasks();
-    if (Window.pusher.channel('task_channel') === undefined) {
-      var channel = Window.pusher.subscribe('task_channel');
+    var channel = Window.pusher.subscribe('task_channel');
+    channel.bind('update', function(data) {
+      var tasks = [];
+      this.state.tasks.forEach(function (task) {
+        if (task.id == data.id) {
+          tasks.push(data);
+        } else {
+          tasks.push(task);
+        }
+      });
+      this.setState({tasks: tasks});
+    }.bind(this));
 
-      channel.bind('update', function(data) {
-        var tasks = [];
-        this.state.tasks.forEach(function (task) {
-          if (task.id == data.id) {
-            tasks.push(data);
-          } else {
-            tasks.push(task);
-          }
-        });
-        this.setState({tasks: tasks});
-      }.bind(this));
+    channel.bind('create', function(data) {
+      var tasks = this.state.tasks;
+      tasks.push(data);
+      this.setState({tasks: tasks});
+    }.bind(this));
 
-      channel.bind('create', function(data) {
-        var tasks = this.state.tasks;
-        tasks.push(data);
-        this.setState({tasks: tasks});
-      }.bind(this));
-
-      channel.bind('delete', function(data) {
-        var tasks = [];
-        this.state.tasks.forEach(function (task) {
-          if (task.id != data.id) {
-            tasks.push(task);
-          }
-        });
-        this.setState({tasks: tasks});
-      }.bind(this));
-    }
+    channel.bind('delete', function(data) {
+      var tasks = [];
+      this.state.tasks.forEach(function (task) {
+        if (task.id != data.id) {
+          tasks.push(task);
+        }
+      });
+      this.setState({tasks: tasks});
+    }.bind(this));
   },
   componentWillReceiveProps: function() {
     this.getTasks();
