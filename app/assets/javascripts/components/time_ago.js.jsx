@@ -1,20 +1,19 @@
 var TimeAgo = React.createClass({
   getInitialState: function() {
     return {
+      interval: setInterval(this.setTimeAgo, 5000),
       timeAgo: moment(this.props.createdAt).fromNow()
     };
   },
-  componentDidMount: function() {
-    this.setInterval(this.getTimeAgo, 1000); // Call a method on the mixin
-  },
-  getTimeAgo: function() {
+  setTimeAgo: function() {
     this.setState({timeAgo: moment(this.props.createdAt).fromNow()})
+  },
+  componentWillUnmount: function() {
+    clearInterval(this.state.interval);
   },
   render: function() {
     return (
-      <div>
-        {this.state.timeAgo}
-      </div>
+      <span>{this.state.timeAgo}</span>
     );
   }
 });

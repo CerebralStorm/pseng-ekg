@@ -96,6 +96,7 @@ var TaskDetail = React.createClass({
     return (
       <div>
         <BackButton url={'/'} />
+        <hr />
         <div className="panel panel-default">
           <div className="panel-heading">
             <h3 className="panel-title">{this.state.task.name}</h3>
@@ -108,13 +109,15 @@ var TaskDetail = React.createClass({
 
 
               <h5 className='text-center'>Logs</h5>
+              <hr />
               <ul>
                 {logNodes}
               </ul>
 
-              <hr />
+              <br />
 
               <h5 className='text-center text-warning'>Errors</h5>
+              <hr />
               <div className='list-group'>
                 {errorNodes}
               </div>
